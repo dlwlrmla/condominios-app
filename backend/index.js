@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 let casas = [
     {
@@ -33,16 +34,23 @@ let casas = [
     else response.status(404).end()
   })
 
-app.delete('api/casas/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const casa = casas.find(casa => casa.id === id)
-    if(casa){
-        casas =  casas.filter(casa => casa.id !== id)
-        response.json(casas)
-    } 
-
-    else response.status(404).end()
+  app.delete('/api/casas/:id', (req, res) => {
+    const id = req.params.id
+    casas = casas.filter(casa => casa.id != id)
+    res.json(casas)
 })
+
+app.post('/api/casas', (req, res) => {
+  const casa = {
+      id : casas.length + 1,
+      usuarios : req.body.usuarios
+  }
+  casas  = casas.concat(casa)
+  
+  res.json(casas)
+
+})
+
   
   const PORT = 3001
   app.listen(PORT, () => {
