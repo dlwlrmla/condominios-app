@@ -1,6 +1,9 @@
-import mysql from 'mysql2/promise'
-import {config} from './config.js'
-export const connect = async () => {
-    const connection = await mysql.createConnection(config)
-    return connection
-}
+import { createPool } from 'mysql2'
+export const pool = createPool({
+    host: 'condominios.cifm8lfferqz.us-west-2.rds.amazonaws.com',
+    user: 'victorinfluencia',
+    password: 'colocolo5631',
+    database: 'condominios',
+    port: '5463'
+})
+
