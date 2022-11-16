@@ -1,33 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import page1 from './pages/page1';
-import page2 from './pages/page2';
-
-const Stack = createNativeStackNavigator()
-
+import { useState, useEffect } from 'react';
 export default function App() {
+
+  const [users, setUsers] = useState([])
+  const connectDatabase = async () => {
+    const response = await fetch('http://10.0.2.2:3000/users')
+    const data = await response.json()
+    console.log(data)
+    setUsers(data)
+  }
+useEffect(() => {
+  connectDatabase()
+}, [])
+
   return (
+    <View style={styles.container}>
+      {users.map((user) => (
+        <Text key={user.id}>Departamento número: {user.name}</Text>
+      ))}
 
-
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen 
-        name="page1"
-        component ={page1}
-        options={{title:'welcome'}}
-       />
-
-       <Stack.Screen 
-        name="page2"
-        component = {page2}
-
-       />
-
-      </Stack.Navigator>
-
-    </NavigationContainer>
+      <StatusBar style="auto" />
+    </View>
   );
 }
 
@@ -38,4 +32,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
 });
