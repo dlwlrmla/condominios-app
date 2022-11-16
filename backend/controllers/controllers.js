@@ -50,7 +50,7 @@ export const deleteUser = async (req, res ) => {
         
     }
 }
-
+///q wea paso por la xuxa
 export const editUser = async (req, res) => {
     try {
         const promisePool = pool.promise()
